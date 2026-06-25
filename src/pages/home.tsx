@@ -1,6 +1,6 @@
 import { AuthModals } from "@/components/auth-modals";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { SmoothScroll } from "@/components/landing/smooth-scroll";
 import { MouseGlow } from "@/components/landing/mouse-glow";
@@ -49,8 +49,8 @@ function Nav({ onOpenAuth }: { onOpenAuth: (mode: 'login' | 'signup') => void })
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <button className="hidden sm:inline-flex text-sm font-medium text-white/80 px-3 py-2 rounded-full hover:glass-dark border border-white/10 rounded-3xl p-8/60">Sign In</button>
-          <button className="text-sm font-bold px-5 py-2.5 rounded-full bg-teal-400 text-slate-900 shadow-[0_0_15px_rgba(79,209,197,0.4)] hover:shadow-[0_0_25px_rgba(79,209,197,0.6)] hover:bg-teal-300 hover:scale-105 active:scale-95 transition-all duration-300">
+          <button onClick={() => onOpenAuth('login')} className="hidden sm:inline-flex text-sm font-medium text-white/80 px-3 py-2 rounded-full hover:glass-dark border border-white/10 rounded-3xl p-8/60">Sign In</button>
+          <button onClick={() => onOpenAuth('signup')} className="text-sm font-bold px-5 py-2.5 rounded-full bg-teal-400 text-slate-900 shadow-[0_0_15px_rgba(79,209,197,0.4)] hover:shadow-[0_0_25px_rgba(79,209,197,0.6)] hover:bg-teal-300 hover:scale-105 active:scale-95 transition-all duration-300">
             Start Investing
           </button>
           <button className="md:hidden p-2" onClick={() => setOpen(!open)} aria-label="Menu">
