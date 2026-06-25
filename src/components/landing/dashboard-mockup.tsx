@@ -50,7 +50,7 @@ export function DashboardMockup() {
               <div className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
             </div>
             <div className="hidden md:flex gap-1 text-[11px] font-medium text-slate-500">
-              {["Portfolio", "Performance", "Assets", "Analytics"].map((t, i) => (
+              {["Portefeuille", "Performance", "Actifs", "Analyses"].map((t, i) => (
                 <span key={t} className={`px-3 py-1.5 rounded-full ${i === 0 ? "bg-indigo-600 text-white" : "bg-slate-100"}`}>{t}</span>
               ))}
             </div>
@@ -61,11 +61,11 @@ export function DashboardMockup() {
             {/* Big portfolio card */}
             <div className="col-span-12 md:col-span-7 rounded-2xl bg-gradient-to-br from-indigo-600 via-blue-600 to-teal-500 p-5 text-white relative overflow-hidden">
               <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/15 blur-2xl" />
-              <p className="text-xs/relaxed opacity-80">Total Portfolio Value</p>
+              <p className="text-xs/relaxed opacity-80">Valeur Totale du Portefeuille</p>
               <p className="text-3xl md:text-4xl font-bold tracking-tight mt-1">$248,930.42</p>
               <div className="flex items-center gap-2 mt-1.5 text-sm">
                 <span className="px-2 py-0.5 rounded-full bg-emerald-300/30 text-emerald-50 text-xs font-semibold">+18.42%</span>
-                <span className="opacity-80 text-xs">past 30 days</span>
+                <span className="opacity-80 text-xs">les 30 derniers jours</span>
               </div>
               {/* Sparkline */}
               <svg viewBox="0 0 320 80" className="mt-4 w-full">
@@ -101,28 +101,28 @@ export function DashboardMockup() {
                   <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-amber-500" /> BTC 45%</div>
                   <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-indigo-500" /> ETH 30%</div>
                   <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-teal-500" /> SOL 15%</div>
-                  <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-slate-300" /> Other 10%</div>
+                  <div className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-slate-300" /> Autre 10%</div>
                 </div>
               </div>
             </div>
 
             {/* Risk meter */}
             <div className="col-span-6 md:col-span-4 rounded-2xl bg-slate-50 p-4">
-              <p className="text-xs text-slate-500">Risk Meter</p>
-              <p className="mt-1 text-lg font-semibold text-slate-800">Balanced</p>
+              <p className="text-xs text-slate-500">Niveau de Risque</p>
+              <p className="mt-1 text-lg font-semibold text-slate-800">Équilibré</p>
               <div className="mt-3 h-2 w-full rounded-full bg-slate-200 overflow-hidden">
                 <motion.div initial={{ width: 0 }} whileInView={{ width: "62%" }} viewport={{ once: true }} transition={{ duration: 1.2 }} className="h-full bg-gradient-to-r from-emerald-400 via-amber-400 to-rose-500" />
               </div>
             </div>
             {/* Score */}
             <div className="col-span-6 md:col-span-4 rounded-2xl bg-slate-50 p-4">
-              <p className="text-xs text-slate-500">Investment Score</p>
+              <p className="text-xs text-slate-500">Score d'Investissement</p>
               <p className="mt-1 text-2xl font-bold text-slate-800">87<span className="text-sm text-slate-400">/100</span></p>
               <p className="text-[11px] text-emerald-600 font-semibold mt-0.5">Excellent</p>
             </div>
             {/* Prices */}
             <div className="col-span-12 md:col-span-4 rounded-2xl bg-slate-50 p-4">
-              <p className="text-xs text-slate-500 mb-2">Live Prices</p>
+              <p className="text-xs text-slate-500 mb-2">Prix en Direct</p>
               <div className="space-y-1.5 text-xs">
                 <div className="flex justify-between"><span>BTC</span><span className="font-semibold text-emerald-600">$68,420</span></div>
                 <div className="flex justify-between"><span>ETH</span><span className="font-semibold text-emerald-600">$3,842</span></div>

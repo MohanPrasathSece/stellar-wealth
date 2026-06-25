@@ -76,7 +76,7 @@ export function Logo({ className = "" }: { className?: string }) {
           <span className="text-[15px] font-black bg-gradient-to-br from-indigo-600 to-teal-500 bg-clip-text text-transparent">N</span>
         </div>
       </div>
-      <span className="text-lg font-bold tracking-tight text-foreground">Nimbus<span className="text-teal-500">.</span></span>
+      <span className="text-lg font-bold tracking-tight text-foreground">Maison Bloc<span className="text-teal-500">.</span></span>
     </div>
   );
 }

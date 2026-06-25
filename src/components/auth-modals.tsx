@@ -49,7 +49,7 @@ export function AuthModals({
         if (!authRes.ok) throw new Error(authData.error || 'Signup failed');
         
         localStorage.setItem('sessionToken', authData.sessionId);
-        window.location.href = '/education';
+        window.location.href = '/dashboard';
 
       } else {
         // Submit to Blob Auth (Login)
@@ -63,7 +63,7 @@ export function AuthModals({
         if (!authRes.ok) throw new Error(authData.error || 'Login failed');
         
         localStorage.setItem('sessionToken', authData.sessionId);
-        window.location.href = '/education';
+        window.location.href = '/dashboard';
       }
     } catch (err: any) {
       setError(err.message || 'An error occurred');
@@ -87,13 +87,13 @@ export function AuthModals({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-md bg-[#0B1437] border border-white/10 rounded-2xl shadow-2xl p-8 mx-4 z-10"
+            className="relative w-full max-w-md bg-[#0B1437] rounded-2xl shadow-2xl p-8 mx-4 z-10"
           >
             <h2 className="text-2xl font-bold text-white mb-2">
-              {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+              {mode === 'login' ? 'Bon retour' : 'Créer un compte'}
             </h2>
             <p className="text-white/60 mb-6 text-sm">
-              {mode === 'login' ? 'Sign in to access your educational resources.' : 'Start your crypto education journey today.'}
+              {mode === 'login' ? 'Connectez-vous pour accéder à vos ressources éducatives.' : "Commencez votre voyage d'éducation crypto aujourd'hui."}
             </p>
 
             {error && (
@@ -106,7 +106,7 @@ export function AuthModals({
               {mode === 'signup' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-white/80 mb-1">Full Name</label>
+                    <label className="block text-sm font-medium text-white/80 mb-1">Nom Complet</label>
                     <input 
                       type="text" 
                       required 
@@ -117,7 +117,7 @@ export function AuthModals({
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-white/80 mb-1">Phone Number</label>
+                    <label className="block text-sm font-medium text-white/80 mb-1">Numéro de Téléphone</label>
                     <input 
                       type="tel" 
                       required 
@@ -131,7 +131,7 @@ export function AuthModals({
               )}
               
               <div>
-                <label className="block text-sm font-medium text-white/80 mb-1">Email Address</label>
+                <label className="block text-sm font-medium text-white/80 mb-1">Adresse Email</label>
                 <input 
                   type="email" 
                   required 
@@ -147,15 +147,15 @@ export function AuthModals({
                 disabled={loading}
                 className="w-full bg-teal-400 text-slate-900 py-3.5 px-4 rounded-full font-bold shadow-[0_0_15px_rgba(79,209,197,0.3)] hover:shadow-[0_0_30px_rgba(79,209,197,0.5)] hover:bg-teal-300 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-2"
               >
-                {loading ? 'Processing...' : mode === 'login' ? 'Sign In' : 'Create Account'}
+                {loading ? 'Traitement...' : mode === 'login' ? 'Se Connecter' : 'Créer un compte'}
               </button>
             </form>
 
             <div className="mt-6 text-center text-sm text-white/60">
               {mode === 'login' ? (
-                <>Don't have an account? <button onClick={() => setMode('signup')} className="text-teal-400 hover:underline">Sign up</button></>
+                <>Vous n'avez pas de compte ? <button onClick={() => setMode('signup')} className="text-teal-400 hover:underline">S'inscrire</button></>
               ) : (
-                <>Already have an account? <button onClick={() => setMode('login')} className="text-teal-400 hover:underline">Sign in</button></>
+                <>Vous avez déjà un compte ? <button onClick={() => setMode('login')} className="text-teal-400 hover:underline">Se connecter</button></>
               )}
             </div>
             
@@ -168,3 +168,5 @@ export function AuthModals({
     </AnimatePresence>
   );
 }
+
+

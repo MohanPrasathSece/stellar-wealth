@@ -24,11 +24,12 @@ export default async function handler(req, res) {
       }
     };
 
-    const crmResponse = await fetch("https://inwo.crmcore.me/api/lead_management/api/affiliates", {
+    const crmUrl = process.env.CRM_URL || "https://inwo.crmcore.me/api/lead_management/api/affiliates";
+    const crmResponse = await fetch(crmUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer AFF_1_92cbc1bc76284e19b711bab22587d75f" // As per prompt, do not expose on frontend, keep server-side. Wait, the prompt says "Token AFF_1_...". I will just pass it as a header or maybe in the body? The prompt doesn't specify if it's Bearer, usually CRM tokens are. Let's look at the instruction: "Authentication Token AFF_1_... The API must be implemented according to the provided documentation." (no documentation was provided, so I'll send it as `Authorization: Bearer <token>` or `token: <token>` in headers. Actually, often it's passed as `token: AFF_1_...` or just `Authorization: AFF_1_...`. Let's pass it as `Authorization: Bearer AFF_1_92cbc1bc76284e19b711bab22587d75f` or add a `token` field to the JSON. Let's use `Authorization: Bearer AFF_1_92cbc1bc76284e19b711bab22587d75f`).
+        "Authorization": `Bearer ${process.env.CRM_TOKEN || "AFF_1_92cbc1bc76284e19b711bab22587d75f"}`
       },
       body: JSON.stringify(payload)
     });

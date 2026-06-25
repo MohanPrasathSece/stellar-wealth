@@ -69,10 +69,10 @@ export default function EducationPage() {
         
         {/* Simple Nav for Logged In */}
         <nav className="fixed top-0 inset-x-0 z-50 p-4 border-b border-white/5 bg-[#0B1437]/80 backdrop-blur-md flex justify-between items-center px-8">
-          <div className="flex items-center gap-2"><Logo /><span className="font-bold text-xl tracking-tight">Nimbus</span></div>
+          <div className="flex items-center gap-2"><Logo /><span className="font-bold text-xl tracking-tight">Maison Bloc</span></div>
           <div className="flex items-center gap-6">
-            <span className="text-sm font-medium text-white/60 hidden sm:block">Welcome, Member</span>
-            <button onClick={() => { localStorage.removeItem('sessionToken'); window.location.href = '/'; }} className="text-sm font-bold text-teal-400 hover:text-teal-300 transition">Sign Out</button>
+            <span className="text-sm font-medium text-white/60 hidden sm:block">Bienvenue, Membre</span>
+            <button onClick={() => { localStorage.removeItem('sessionToken'); window.location.href = '/'; }} className="text-sm font-bold text-teal-400 hover:text-teal-300 transition">Se déconnecter</button>
           </div>
         </nav>
 
@@ -82,9 +82,9 @@ export default function EducationPage() {
             className="text-center mb-16"
           >
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-              Crypto Education Hub
+              Centre d'Éducation Crypto
             </h1>
-            <p className="text-xl text-white/70 max-w-2xl mx-auto">Master the digital asset ecosystem with premium insights and educational resources.</p>
+            <p className="text-xl text-white/70 max-w-2xl mx-auto">Maîtrisez l'écosystème des actifs numériques avec des analyses premium et des ressources éducatives.</p>
           </motion.div>
 
           {/* Mac-style Browser Window */}
@@ -100,7 +100,7 @@ export default function EducationPage() {
                 <div className="w-3 h-3 rounded-full bg-green-400" />
               </div>
               <div className="flex gap-2">
-                {['Overview', 'Market Analysis', 'Risk Management'].map(tab => (
+                {['Aperçu', 'Analyse de Marché', 'Gestion des Risques'].map(tab => (
                   <button 
                     key={tab}
                     onClick={() => setActiveTab(tab)}
@@ -119,9 +119,9 @@ export default function EducationPage() {
                   key={activeTab}
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.3 }}
                 >
-                  {activeTab === 'Overview' && (
+                  {activeTab === 'Aperçu' && (
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {['Introduction to Cryptocurrency', 'Understanding Blockchain', 'Digital Asset Investing', 'Crypto Trading Basics', 'AI & Market Analysis', 'Portfolio Diversification'].map((topic, i) => (
+                      {['Introduction à la Crypto-monnaie', 'Comprendre la Blockchain', 'Investissement en Actifs Numériques', 'Bases du Trading Crypto', 'IA & Analyse de Marché', 'Diversification de Portefeuille'].map((topic, i) => (
                         <motion.div 
                           key={topic} 
                           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
@@ -132,25 +132,25 @@ export default function EducationPage() {
                              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-teal-400" strokeWidth="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                           </div>
                           <h3 className="text-lg font-bold mb-2">{topic}</h3>
-                          <p className="text-white/60 text-sm">Deep dive into {topic.toLowerCase()} and understand the fundamentals.</p>
+                          <p className="text-white/60 text-sm">Plongez au cœur de : {topic.toLowerCase()} et comprenez les fondamentaux.</p>
                         </motion.div>
                       ))}
                     </div>
                   )}
-                  {activeTab === 'Market Analysis' && (
+                  {activeTab === 'Analyse de Marché' && (
                     <div className="space-y-8">
                       <div>
-                        <h3 className="text-2xl font-bold mb-2">Live Market Trends</h3>
-                        <p className="text-white/60">Real-time simulation of market volatility and trend lines.</p>
+                        <h3 className="text-2xl font-bold mb-2">Tendances du Marché en Direct</h3>
+                        <p className="text-white/60">Simulation en temps réel de la volatilité du marché et des lignes de tendance.</p>
                       </div>
                       <div className="rounded-xl border border-white/10 bg-black/20 p-4">
                         <AnimatedCandlesticks />
                       </div>
                     </div>
                   )}
-                  {activeTab === 'Risk Management' && (
+                  {activeTab === 'Gestion des Risques' && (
                     <div className="flex items-center justify-center h-64 text-white/50 text-center">
-                      <p>Advanced security modules and portfolio hedging strategies<br/>will be unlocked shortly.</p>
+                      <p>Des modules de sécurité avancés et des stratégies de couverture de portefeuille<br/>seront bientôt débloqués.</p>
                     </div>
                   )}
                 </motion.div>
@@ -163,35 +163,35 @@ export default function EducationPage() {
             initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
             className="max-w-xl mx-auto text-center"
           >
-            <h2 className="text-3xl font-bold mb-4">Request VIP Consultation</h2>
-            <p className="text-white/60 mb-8">Need personalized guidance? Our experts are here to help.</p>
+            <h2 className="text-3xl font-bold mb-4">Demander une Consultation VIP</h2>
+            <p className="text-white/60 mb-8">Besoin de conseils personnalisés ? Nos experts sont là pour vous aider.</p>
 
             {success ? (
               <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="p-8 glass border border-teal-400/30 rounded-2xl text-teal-400">
                 <svg className="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                <h3 className="text-xl font-bold mb-2">Thank you!</h3>
-                <p>Your enquiry has been received successfully.</p>
+                <h3 className="text-xl font-bold mb-2">Merci !</h3>
+                <p>Votre demande a été reçue avec succès.</p>
               </motion.div>
             ) : (
               <form onSubmit={handleContactSubmit} className="space-y-4 text-left glass-dark border border-white/10 p-8 rounded-3xl">
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Name</label>
-                  <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="John Doe" />
+                  <label className="block text-sm font-medium text-white/80 mb-1">Nom</label>
+                  <input required type="text" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="Jean Dupont" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-white/80 mb-1">Email</label>
-                  <input required type="email" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="john@example.com" />
+                  <input required type="email" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="jean@exemple.com" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Phone Number</label>
+                  <label className="block text-sm font-medium text-white/80 mb-1">Numéro de Téléphone</label>
                   <input required type="tel" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="+1 555 000 0000" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-white/80 mb-1">Message (Optional)</label>
-                  <textarea rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="How can we help?"></textarea>
+                  <label className="block text-sm font-medium text-white/80 mb-1">Message (Optionnel)</label>
+                  <textarea rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="Comment pouvons-nous vous aider ?"></textarea>
                 </div>
                 <button disabled={loading} type="submit" className="w-full mt-4 bg-teal-400 text-slate-900 py-3.5 px-4 rounded-full font-bold shadow-[0_0_15px_rgba(79,209,197,0.3)] hover:shadow-[0_0_30px_rgba(79,209,197,0.5)] hover:bg-teal-300 transition-all duration-300 disabled:opacity-50">
-                  {loading ? 'Submitting...' : 'Submit Enquiry'}
+                  {loading ? 'Envoi en cours...' : 'Soumettre la Demande'}
                 </button>
               </form>
             )}
