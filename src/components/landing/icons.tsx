@@ -70,13 +70,23 @@ export function CoinXRP(props: SVGProps<SVGSVGElement>) {
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className="relative h-9 w-9">
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-teal-400 via-sky-500 to-indigo-600" />
-        <div className="absolute inset-[3px] rounded-[10px] bg-white/90 flex items-center justify-center">
-          <span className="text-[15px] font-black bg-gradient-to-br from-indigo-600 to-teal-500 bg-clip-text text-transparent">N</span>
-        </div>
+      <div className="relative h-10 w-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-teal-400 via-sky-500 to-indigo-600 shadow-lg shadow-teal-500/20">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-6 h-6 text-white drop-shadow-md"
+        >
+          <path
+            fillRule="evenodd"
+            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
+            clipRule="evenodd"
+          />
+        </svg>
       </div>
-      <span className="text-lg font-bold tracking-tight text-foreground">Maison Bloc<span className="text-teal-500">.</span></span>
+      <span className="text-xl font-bold tracking-tight text-foreground">
+        Stellar Wealth<span className="text-teal-500">.</span>
+      </span>
     </div>
   );
 }
