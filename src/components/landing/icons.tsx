@@ -69,25 +69,24 @@ export function CoinXRP(props: SVGProps<SVGSVGElement>) {
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <div className="relative h-10 w-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 via-indigo-500 to-purple-600 shadow-[0_0_15px_rgba(79,209,197,0.4)]">
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      <div className="relative flex items-center justify-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
+          strokeWidth="1.75"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="w-6 h-6 text-white drop-shadow-md"
+          className="w-7 h-7"
         >
-          <path d="M12 2L5 11l7 11 7-11-7-9z" fill="currentColor" fillOpacity="0.3" />
-          <path d="M12 2v20" />
-          <path d="M5 11l7-4 7 4-7 4-7-4z" />
+          <polygon points="12 3 20 7.5 12 12 4 7.5" className="fill-teal-500/20 stroke-teal-400" />
+          <polygon points="4 7.5 12 12 12 21 4 16.5" className="stroke-slate-400" />
+          <polygon points="20 7.5 12 12 12 21 20 16.5" className="stroke-slate-300" />
         </svg>
       </div>
-      <span className="text-xl font-bold tracking-tight text-foreground">
-        Stellar Wealth<span className="text-teal-500">.</span>
+      <span className="text-xl font-semibold tracking-tight text-foreground">
+        Stellar Wealth<span className="text-teal-400 font-bold">.</span>
       </span>
     </div>
   );
