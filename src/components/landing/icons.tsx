@@ -86,7 +86,7 @@ export function Logo({ className = "" }: { className?: string }) {
         </svg>
       </div>
       <span className="text-xl font-semibold tracking-tight text-foreground">
-        Stellar Wealth<span className="text-teal-400 font-bold">.</span>
+        Maison Bloc<span className="text-teal-400 font-bold">.</span>
       </span>
     </div>
   );
