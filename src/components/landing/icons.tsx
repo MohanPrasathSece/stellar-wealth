@@ -70,18 +70,20 @@ export function CoinXRP(props: SVGProps<SVGSVGElement>) {
 export function Logo({ className = "" }: { className?: string }) {
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className="relative h-10 w-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-teal-400 via-sky-500 to-indigo-600 shadow-lg shadow-teal-500/20">
+      <div className="relative h-10 w-10 flex items-center justify-center rounded-xl bg-gradient-to-br from-teal-500 via-indigo-500 to-purple-600 shadow-[0_0_15px_rgba(79,209,197,0.4)]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          fill="currentColor"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="w-6 h-6 text-white drop-shadow-md"
         >
-          <path
-            fillRule="evenodd"
-            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"
-            clipRule="evenodd"
-          />
+          <path d="M12 2L5 11l7 11 7-11-7-9z" fill="currentColor" fillOpacity="0.3" />
+          <path d="M12 2v20" />
+          <path d="M5 11l7-4 7 4-7 4-7-4z" />
         </svg>
       </div>
       <span className="text-xl font-bold tracking-tight text-foreground">
