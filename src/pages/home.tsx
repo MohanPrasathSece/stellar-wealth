@@ -778,11 +778,22 @@ function ContactFormSection() {
     setLoading(true);
     setError('');
     
+    const cleanNum = phone.replace(/\s+/g, "");
+    if (!cleanNum) {
+      setError("Veuillez entrer un numéro de téléphone");
+      setLoading(false);
+      return;
+    } else if (!/^(\+41|0041|0)?[1-9]\d{8}$/.test(cleanNum)) {
+      setError("Veuillez entrer un numéro suisse valide (ex: 079 123 45 67)");
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await fetch('/api/crm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ first_name: name, email, phone, description: message })
+        body: JSON.stringify({ name: name, email, phone: cleanNum, description: message })
       });
       const data = await res.json();
       if (!res.ok && !data.success) throw new Error(data.error || 'Failed to submit enquiry');

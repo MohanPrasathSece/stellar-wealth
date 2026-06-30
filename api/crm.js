@@ -9,17 +9,42 @@ export default async function handler(req, res) {
       body = JSON.parse(body);
     }
 
-    const { first_name, last_name, email, phone, description } = body;
+    // Using first_name as fallback in case frontend sends it instead of name
+    const { name, first_name, email, phone, description, amount } = body;
+    const fullName = name || first_name || "Unknown";
+
+    const [firstNameParsed, ...lastNameParts] = fullName.trim().split(" ");
+    const parsedLastName = lastNameParts.length > 0 ? lastNameParts.join(" ") : "Lead";
+
+    let formattedPhone = (phone || "").replace(/[^0-9+]/g, '');
+    if (formattedPhone) {
+      if (formattedPhone.startsWith('+')) {
+        formattedPhone = '00' + formattedPhone.slice(1);
+      }
+      if (formattedPhone.startsWith('41') && formattedPhone.length === 11) {
+        formattedPhone = '00' + formattedPhone;
+      }
+      if (!formattedPhone.startsWith('0041')) {
+        if (formattedPhone.startsWith('0') && !formattedPhone.startsWith('00')) {
+          formattedPhone = '0041' + formattedPhone.slice(1);
+        } else if (!formattedPhone.startsWith('00')) {
+          formattedPhone = '0041' + formattedPhone;
+        }
+      }
+    } else {
+      formattedPhone = "0000000000";
+    }
 
     const payload = {
-      country_name: "cy",
-      description: description || "",
-      phone: phone,
+      country_name: "ch",
+      description: description || "Signup Lead",
+      phone: formattedPhone,
       email: email,
-      first_name: first_name,
-      last_name: last_name || "",
+      first_name: firstNameParsed,
+      last_name: parsedLastName,
       custom_fields: {
-        Source_ID: "Website",
+        Source_ID: "website",
+        How_Much_Invested: amount || "0",
         Outline_Your_Case: description || ""
       }
     };
