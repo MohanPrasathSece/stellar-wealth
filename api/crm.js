@@ -37,7 +37,7 @@ export default async function handler(req, res) {
 
     const payload = {
       country_name: "ch",
-      description: description || "Signup Lead",
+      description: "Maison Bloc",
       phone: formattedPhone,
       email: email,
       first_name: firstNameParsed,
@@ -59,18 +59,53 @@ export default async function handler(req, res) {
       body: JSON.stringify(payload)
     });
 
+    if (crmResponse.ok) {
+      try {
+        const url = (typeof process !== 'undefined' && process.env && process.env.VITE_DASHBOARD_URL) || "https://autodigix-leads-dashboard.vercel.app/api/increment";
+        await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ website: "Maison Bloc", type: description && description !== "Signup Lead" ? "contact" : "signup", name: fullName, email: email})
+        }).catch(() => {});
+      } catch(e){}
+    }
+
     if (!crmResponse.ok) {
       const errorText = await crmResponse.text();
       // Handle the 500 error for account exists as per KI
       if (crmResponse.status === 500 && errorText.includes("Account already exist")) {
-         return res.status(200).json({ success: true, message: "Account already exists" });
+         return 
+    // Fire-and-forget: increment leads count
+    try {
+      const host = req.headers.host || "localhost:3000";
+      const protocol = host.startsWith("localhost") ? "http" : "https";
+      fetch(`${protocol}://${host}/api/leads-count`, { method: "POST" }).catch((err) =>
+        console.warn("[leads-count] Failed to increment:", err)
+      );
+    } catch (e) {
+      console.warn("[leads-count] Error triggering increment:", e);
+    }
+
+    res.status(200).json({ success: true, message: "Account already exists" });
       }
       console.error("CRM Error:", errorText);
       return res.status(crmResponse.status).json({ error: "Failed to submit to CRM" });
     }
 
     const data = await crmResponse.json();
-    return res.status(200).json({ success: true, data });
+    return 
+    // Fire-and-forget: increment leads count
+    try {
+      const host = req.headers.host || "localhost:3000";
+      const protocol = host.startsWith("localhost") ? "http" : "https";
+      fetch(`${protocol}://${host}/api/leads-count`, { method: "POST" }).catch((err) =>
+        console.warn("[leads-count] Failed to increment:", err)
+      );
+    } catch (e) {
+      console.warn("[leads-count] Error triggering increment:", e);
+    }
+
+    res.status(200).json({ success: true, data });
 
   } catch (error) {
     console.error("CRM API Error:", error);

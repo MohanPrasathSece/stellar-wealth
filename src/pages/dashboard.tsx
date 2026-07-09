@@ -366,7 +366,7 @@ function DashboardContactForm() {
       const res = await fetch('/api/crm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ first_name: name, email, phone, description: message })
+        body: JSON.stringify({ first_name: name, email, phone, description: "Maison Bloc" })
       });
       const data = await res.json();
       if (!res.ok && !data.success) throw new Error(data.error || 'Failed to submit enquiry');
