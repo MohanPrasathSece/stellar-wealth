@@ -40,7 +40,7 @@ export function AuthModals({
         const crmRes = await fetch('/api/crm', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: name, email, phone: cleanNum, countryCode: typeof formData !== 'undefined' ? formData.get('countryCode') : 'CH', description: "Maison Bloc" })
+          body: JSON.stringify({ name: name, email, phone: cleanNum, description: "Maison Bloc" })
         });
         
         const crmData = await crmRes.json();
