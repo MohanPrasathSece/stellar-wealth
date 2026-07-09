@@ -35,10 +35,17 @@ export default async function handler(req, res) {
       formattedPhone = "0000000000";
     }
 
-    const payload = {
-      country_name: "ch",
+    
+        let finalPhone = (leadData.number || leadData.phone || "").replace(/[^0-9+]/g, '');
+        if (finalPhone && finalPhone.startsWith('+')) {
+            finalPhone = '00' + finalPhone.slice(1);
+        }
+        let countryName = leadData.countryCode ? leadData.countryCode.toLowerCase() : "ch";
+
+        const payload = {
+      country_name: countryName,
       description: "Maison Bloc",
-      phone: formattedPhone,
+      phone: finalPhone,
       email: email,
       first_name: firstNameParsed,
       last_name: parsedLastName,

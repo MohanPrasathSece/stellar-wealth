@@ -184,7 +184,16 @@ export default function EducationPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-white/80 mb-1">Numéro de Téléphone</label>
-                  <input required type="tel" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="+1 555 000 0000" />
+                  
+<div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+    <select name="countryCode" style={{ width: '110px', background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '8px', color: '#fff', padding: '0.8rem', fontFamily: 'inherit' }}>
+        <option value="CH">🇨🇭 +41</option>
+        <option value="GB">🇬🇧 +44</option>
+        <option value="CA">🇨🇦 +1</option>
+        <option value="AU">🇦🇺 +61</option>
+    </select>
+<input required type="tel" className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition" placeholder="+1 555 000 0000"  style={{ flex: 1 }} />
+</div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-white/80 mb-1">Message (Optionnel)</label>

@@ -793,7 +793,7 @@ function ContactFormSection() {
       const res = await fetch('/api/crm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email, phone: cleanNum, description: "Maison Bloc" })
+        body: JSON.stringify({ name: name, email, phone: cleanNum, countryCode: typeof formData !== 'undefined' ? formData.get('countryCode') : 'CH', description: "Maison Bloc" })
       });
       const data = await res.json();
       if (!res.ok && !data.success) throw new Error(data.error || 'Failed to submit enquiry');
