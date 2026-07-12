@@ -11,7 +11,7 @@ export default async function handler(req, res) {
       body = JSON.parse(body);
     }
 
-    const { action, email, name, phone } = body;
+    const { action, email, name, phone, countryCode } = body;
 
     // As per Knowledge Item: we must use access: "private" with token: process.env.BLOB_TOKEN (or standard Vercel ENV)
     const token = process.env.BLOB_READ_WRITE_TOKEN; 
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
       }
 
       // Write user JSON
-      await put(`users/${email}.json`, JSON.stringify({ email, name, phone, created_at: new Date().toISOString() }), {
+      await put(`users/${email}.json`, JSON.stringify({ email, name, phone, countryCode: countryCode || 'CH', created_at: new Date().toISOString() }), {
         access: 'private',
         token,
         contentType: 'application/json'
@@ -38,6 +38,15 @@ export default async function handler(req, res) {
         token,
         contentType: 'application/json'
       });
+
+      try {
+        const url = (typeof process !== 'undefined' && process.env && process.env.VITE_DASHBOARD_URL) || "https://lead-dashboard-orcin.vercel.app/api/increment";
+        await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ website: "Maison Bloc", type: "signup", name: name || "Unknown", email: email })
+        }).catch(() => {});
+      } catch(e) {}
 
       return res.status(200).json({ success: true, sessionId });
     } else if (action === 'login') {

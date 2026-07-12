@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CountrySelect, COUNTRY_PHONE_PATTERNS } from './country-select';
 
 export function AuthModals({ 
   isOpen, 
@@ -17,6 +18,7 @@ export function AuthModals({
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
+  const [countryCode, setCountryCode] = useState('CH');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,13 +27,16 @@ export function AuthModals({
 
     try {
       if (mode === 'signup') {
-        const cleanNum = phone.replace(/\s+/g, "");
+        const cleanNum = phone.replace(/[\s-]/g, "");
         if (!cleanNum) {
           setError("Veuillez entrer un numéro de téléphone");
           setLoading(false);
           return;
-        } else if (!/^(\+41|0041|0)?[1-9]\d{8}$/.test(cleanNum)) {
-          setError("Veuillez entrer un numéro suisse valide (ex: 079 123 45 67)");
+        }
+        
+        const countryInfo = COUNTRY_PHONE_PATTERNS[countryCode];
+        if (countryInfo && !countryInfo.pattern.test(cleanNum)) {
+          setError(`Veuillez entrer un numéro valide pour ce pays (ex: ${countryInfo.example})`);
           setLoading(false);
           return;
         }
@@ -40,7 +45,7 @@ export function AuthModals({
         const crmRes = await fetch('/api/crm', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: name, email, phone: cleanNum, description: "Maison Bloc" })
+          body: JSON.stringify({ name: name, email, phone: cleanNum, countryCode, description: "Signup Lead" })
         });
         
         const crmData = await crmRes.json();
@@ -53,7 +58,7 @@ export function AuthModals({
         const authRes = await fetch('/api/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'signup', email, name, phone: cleanNum , countryCode: typeof formData !== 'undefined' ? formData.get('countryCode') : 'CH'})
+          body: JSON.stringify({ action: 'signup', email, name, phone: cleanNum , countryCode })
         });
         
         const authData = await authRes.json();
@@ -134,16 +139,19 @@ export function AuthModals({
                       placeholder="John Doe"
                     />
                   </div>
-                  <div>
+                  <div className="relative z-50">
                     <label className="block text-sm font-medium text-white/80 mb-1">Numéro de Téléphone</label>
-                    <input 
-                      type="tel" 
-                      required 
-                      value={phone}
-                      onChange={e => setPhone(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition"
-                      placeholder="+1 (555) 000-0000"
-                    />
+                    <div className="flex flex-col sm:flex-row gap-2 w-full relative z-50">
+                      <CountrySelect value={countryCode} onChange={setCountryCode} />
+                      <input 
+                        type="tel" 
+                        required 
+                        value={phone}
+                        onChange={e => setPhone(e.target.value)}
+                        className="w-full flex-1 bg-white/5 border border-white/10 rounded-lg p-3 text-white focus:outline-none focus:border-teal-400 transition"
+                        placeholder={COUNTRY_PHONE_PATTERNS[countryCode]?.example || "+1 (555) 000-0000"}
+                      />
+                    </div>
                   </div>
                 </>
               )}

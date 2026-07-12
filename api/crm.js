@@ -1,3 +1,10 @@
+const COUNTRY_DIAL_CODES = {
+  "CH": "41", "FR": "33", "BE": "32", "CA": "1", "US": "1",
+  "GB": "44", "DE": "49", "ES": "34", "IT": "39", "NL": "31",
+  "SE": "46", "AU": "61", "IN": "91", "AE": "971", "SG": "65",
+  "ZA": "27", "BR": "55", "MX": "52", "JP": "81", "CY": "357"
+};
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -10,41 +17,30 @@ export default async function handler(req, res) {
     }
 
     // Using first_name as fallback in case frontend sends it instead of name
-    const { name, first_name, email, phone, description, amount } = body;
+    const { name, first_name, email, phone, countryCode, description, amount } = body;
     const fullName = name || first_name || "Unknown";
 
     const [firstNameParsed, ...lastNameParts] = fullName.trim().split(" ");
     const parsedLastName = lastNameParts.length > 0 ? lastNameParts.join(" ") : "Lead";
 
-    let formattedPhone = (phone || "").replace(/[^0-9+]/g, '');
-    if (formattedPhone) {
-      if (formattedPhone.startsWith('+')) {
-        formattedPhone = '00' + formattedPhone.slice(1);
-      }
-      if (formattedPhone.startsWith('41') && formattedPhone.length === 11) {
-        formattedPhone = '00' + formattedPhone;
-      }
-      if (!formattedPhone.startsWith('0041')) {
-        if (formattedPhone.startsWith('0') && !formattedPhone.startsWith('00')) {
-          formattedPhone = '0041' + formattedPhone.slice(1);
-        } else if (!formattedPhone.startsWith('00')) {
-          formattedPhone = '0041' + formattedPhone;
-        }
-      }
-    } else {
-      formattedPhone = "0000000000";
-    }
-
+    let finalPhone = (phone || "").replace(/[^0-9]/g, '');
+    let cCode = (countryCode || "CH").toUpperCase();
+    const dialCode = COUNTRY_DIAL_CODES[cCode] || "41";
     
-        let finalPhone = (leadData.number || leadData.phone || "").replace(/[^0-9+]/g, '');
-        if (finalPhone && finalPhone.startsWith('+')) {
-            finalPhone = '00' + finalPhone.slice(1);
-        }
-        let countryName = leadData.countryCode ? leadData.countryCode.toLowerCase() : "ch";
+    // Check if the number already has the dial code, if so remove it before re-adding
+    if (finalPhone.startsWith('00' + dialCode)) {
+      finalPhone = finalPhone.slice(2 + dialCode.length);
+    } else if (finalPhone.startsWith(dialCode) && finalPhone.length > 9 && dialCode !== '1') { 
+      finalPhone = finalPhone.slice(dialCode.length);
+    } else if (finalPhone.startsWith('0') && dialCode !== '1' && dialCode !== '39') { // Italy allows 0
+      finalPhone = finalPhone.slice(1);
+    }
+    
+    finalPhone = '00' + dialCode + finalPhone;
 
-        const payload = {
-      country_name: countryName,
-      description: "Maison Bloc",
+    const payload = {
+      country_name: cCode.toLowerCase(),
+      description: description || "Maison Bloc",
       phone: finalPhone,
       email: email,
       first_name: firstNameParsed,
@@ -72,7 +68,7 @@ export default async function handler(req, res) {
         await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ website: "Maison Bloc", type: description && description !== "Signup Lead" ? "contact" : "signup", name: fullName, email: email})
+          body: JSON.stringify({ website: "Maison Bloc", type: "contact", name: fullName, email: email})
         }).catch(() => {});
       } catch(e){}
     }

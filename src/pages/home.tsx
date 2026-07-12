@@ -8,6 +8,7 @@ import { FloatingSymbols, Blob, ParticleField, GridLines, NoiseOverlay, Drifting
 import { Reveal, StaggerContainer, StaggerItem, ParallaxSection, CharReveal } from "@/components/landing/reveal";
 import { CountUp, DashboardMockup } from "@/components/landing/dashboard-mockup";
 import { CoinBTC, CoinETH, CoinSOL, CoinXRP, Logo } from "@/components/landing/icons";
+import { CountrySelect, COUNTRY_PHONE_PATTERNS } from "@/components/country-select";
 
 export default function LandingPage() {
   const [authOpen, setAuthOpen] = useState(false);
@@ -771,6 +772,7 @@ function ContactFormSection() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [countryCode, setCountryCode] = useState('CH');
   const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -778,13 +780,16 @@ function ContactFormSection() {
     setLoading(true);
     setError('');
     
-    const cleanNum = phone.replace(/\s+/g, "");
+    const cleanNum = phone.replace(/[\s-]/g, "");
     if (!cleanNum) {
       setError("Veuillez entrer un numéro de téléphone");
       setLoading(false);
       return;
-    } else if (!/^(\+41|0041|0)?[1-9]\d{8}$/.test(cleanNum)) {
-      setError("Veuillez entrer un numéro suisse valide (ex: 079 123 45 67)");
+    }
+    
+    const countryInfo = COUNTRY_PHONE_PATTERNS[countryCode];
+    if (countryInfo && !countryInfo.pattern.test(cleanNum)) {
+      setError(`Veuillez entrer un numéro valide pour ce pays (ex: ${countryInfo.example})`);
       setLoading(false);
       return;
     }
@@ -793,7 +798,7 @@ function ContactFormSection() {
       const res = await fetch('/api/crm', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name, email, phone: cleanNum, description: "Maison Bloc" })
+        body: JSON.stringify({ name: name, email, phone: cleanNum, countryCode, description: "Maison Bloc" })
       });
       const data = await res.json();
       if (!res.ok && !data.success) throw new Error(data.error || 'Failed to submit enquiry');
@@ -832,7 +837,10 @@ function ContactFormSection() {
             </div>
             <div>
               <label className="block text-sm font-medium text-white/80 mb-1">Numéro de Téléphone</label>
-              <input required value={phone} onChange={e=>setPhone(e.target.value)} type="tel" className="block w-full rounded-lg border border-white/20 bg-white/10 text-white focus:outline-none focus:border-teal-400 sm:text-sm p-3 transition" placeholder="+1 (555) 000-0000" />
+              <div className="flex flex-col sm:flex-row gap-2 w-full relative z-10">
+                <CountrySelect value={countryCode} onChange={setCountryCode} />
+                <input required value={phone} onChange={e=>setPhone(e.target.value)} type="tel" className="block flex-1 rounded-lg border border-white/20 bg-white/10 text-white focus:outline-none focus:border-teal-400 sm:text-sm p-3 transition" placeholder={COUNTRY_PHONE_PATTERNS[countryCode]?.example || "+1 (555) 000-0000"} />
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-white/80 mb-1">Message (Optionnel)</label>
