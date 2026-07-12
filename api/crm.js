@@ -77,13 +77,6 @@ export default async function handler(req, res) {
       const errorText = await crmResponse.text();
       // Handle the 500 error for account exists as per KI
       if (crmResponse.status === 500 && errorText.includes("Account already exist")) {
-        // Fire-and-forget: increment leads count
-        try {
-          const host = req.headers.host || "localhost:3000";
-          const protocol = host.startsWith("localhost") ? "http" : "https";
-          fetch(`${protocol}://${host}/api/leads-count`, { method: "POST" }).catch(() => {});
-        } catch (e) {}
-
         return res.status(400).json({ success: false, error: "Vous nous avez déjà contacté (Compte existant)." });
       }
       
