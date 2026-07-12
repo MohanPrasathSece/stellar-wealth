@@ -77,38 +77,30 @@ export default async function handler(req, res) {
       const errorText = await crmResponse.text();
       // Handle the 500 error for account exists as per KI
       if (crmResponse.status === 500 && errorText.includes("Account already exist")) {
-         return 
-    // Fire-and-forget: increment leads count
-    try {
-      const host = req.headers.host || "localhost:3000";
-      const protocol = host.startsWith("localhost") ? "http" : "https";
-      fetch(`${protocol}://${host}/api/leads-count`, { method: "POST" }).catch((err) =>
-        console.warn("[leads-count] Failed to increment:", err)
-      );
-    } catch (e) {
-      console.warn("[leads-count] Error triggering increment:", e);
-    }
+        // Fire-and-forget: increment leads count
+        try {
+          const host = req.headers.host || "localhost:3000";
+          const protocol = host.startsWith("localhost") ? "http" : "https";
+          fetch(`${protocol}://${host}/api/leads-count`, { method: "POST" }).catch(() => {});
+        } catch (e) {}
 
-    res.status(200).json({ success: true, message: "Account already exists" });
+        return res.status(400).json({ success: false, error: "Vous nous avez déjà contacté (Compte existant)." });
       }
+      
       console.error("CRM Error:", errorText);
-      return res.status(crmResponse.status).json({ error: "Failed to submit to CRM" });
+      return res.status(400).json({ success: false, error: "Veuillez utiliser un email correct ou vérifier vos informations." });
     }
 
     const data = await crmResponse.json();
-    return 
+    
     // Fire-and-forget: increment leads count
     try {
       const host = req.headers.host || "localhost:3000";
       const protocol = host.startsWith("localhost") ? "http" : "https";
-      fetch(`${protocol}://${host}/api/leads-count`, { method: "POST" }).catch((err) =>
-        console.warn("[leads-count] Failed to increment:", err)
-      );
-    } catch (e) {
-      console.warn("[leads-count] Error triggering increment:", e);
-    }
+      fetch(`${protocol}://${host}/api/leads-count`, { method: "POST" }).catch(() => {});
+    } catch (e) {}
 
-    res.status(200).json({ success: true, data });
+    return res.status(200).json({ success: true, data });
 
   } catch (error) {
     console.error("CRM API Error:", error);
