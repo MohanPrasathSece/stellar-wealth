@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     const fullName = name || first_name || "Unknown";
 
     const [firstNameParsed, ...lastNameParts] = fullName.trim().split(" ");
-    const parsedLastName = lastNameParts.length > 0 ? lastNameParts.join(" ") : "Lead";
+    const parsedLastName = lastNameParts.length > 0 ? lastNameParts.join(" ") : "";
 
     let finalPhone = (phone || "").replace(/[^0-9]/g, '');
     let cCode = (countryCode || "CH").toUpperCase();
