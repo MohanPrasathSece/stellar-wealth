@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ParticleField, GridLines, DriftingOrbs, NoiseOverlay } from "@/components/landing/floating";
 import { Reveal, StaggerContainer, StaggerItem } from "@/components/landing/reveal";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 export default function Dashboard() {
   return (
@@ -372,6 +373,12 @@ function DashboardContactForm() {
       if (!res.ok && !data.success) throw new Error(data.error || 'Failed to submit enquiry');
       
       setSuccess(true);
+      trackMetaEvent("Lead", {
+        content_name: "Dashboard Support Form",
+        email: email,
+        phone: phone,
+      });
+      trackMetaEvent("Contact");
       setName(''); setEmail(''); setPhone(''); setMessage('');
     } catch (err: any) {
       setError(err.message || 'An error occurred');

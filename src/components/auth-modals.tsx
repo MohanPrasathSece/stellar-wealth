@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CountrySelect, COUNTRY_PHONE_PATTERNS } from './country-select';
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 export function AuthModals({ 
   isOpen, 
@@ -65,6 +66,16 @@ export function AuthModals({
         if (!authRes.ok) throw new Error(authData.error || 'Signup failed');
         
         localStorage.setItem('sessionToken', authData.sessionId);
+        trackMetaEvent("CompleteRegistration", {
+          content_name: "User Signup",
+          email: email,
+          phone: cleanNum,
+        });
+        trackMetaEvent("Lead", {
+          content_name: "Signup Lead",
+          email: email,
+          phone: cleanNum,
+        });
         window.location.href = '/dashboard';
 
       } else {

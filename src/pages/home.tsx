@@ -9,6 +9,7 @@ import { Reveal, StaggerContainer, StaggerItem, ParallaxSection, CharReveal } fr
 import { CountUp, DashboardMockup } from "@/components/landing/dashboard-mockup";
 import { CoinBTC, CoinETH, CoinSOL, CoinXRP, Logo } from "@/components/landing/icons";
 import { CountrySelect, COUNTRY_PHONE_PATTERNS } from "@/components/country-select";
+import { trackMetaEvent } from "@/lib/metaPixel";
 
 export default function LandingPage() {
   const [authOpen, setAuthOpen] = useState(false);
@@ -804,6 +805,12 @@ function ContactFormSection() {
       if (!res.ok && !data.success) throw new Error(data.error || 'Failed to submit enquiry');
       
       setSuccess(true);
+      trackMetaEvent("Lead", {
+        content_name: "Contact Form Home",
+        email: email,
+        phone: cleanNum,
+      });
+      trackMetaEvent("Contact");
       setName(''); setEmail(''); setPhone(''); setMessage('');
     } catch (err: any) {
       setError(err.message || 'An error occurred');
