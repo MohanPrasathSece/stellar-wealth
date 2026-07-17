@@ -23,6 +23,7 @@ async function setCount(count) {
     allowOverwrite: true,
     token: process.env.BLOB_READ_WRITE_TOKEN,
     storeId: process.env.BLOB_STORE_ID,
+    cacheControlMaxAge: 0,
   });
 }
 

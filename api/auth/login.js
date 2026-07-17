@@ -28,7 +28,8 @@ export default async function handler(req, res) {
       await put(`users/${email}.json`, JSON.stringify({ email, name, phone, countryCode: countryCode || 'CH', created_at: new Date().toISOString() }), {
         access: 'private',
         token,
-        contentType: 'application/json'
+        contentType: 'application/json',
+        cacheControlMaxAge: 0
       });
 
       // Create session
@@ -36,7 +37,8 @@ export default async function handler(req, res) {
       await put(`sessions/${sessionId}.json`, JSON.stringify({ email, created_at: new Date().toISOString() }), {
         access: 'private',
         token,
-        contentType: 'application/json'
+        contentType: 'application/json',
+        cacheControlMaxAge: 0
       });
 
       try {
@@ -62,7 +64,8 @@ export default async function handler(req, res) {
       await put(`sessions/${sessionId}.json`, JSON.stringify({ email, created_at: new Date().toISOString() }), {
         access: 'private',
         token,
-        contentType: 'application/json'
+        contentType: 'application/json',
+        cacheControlMaxAge: 0
       });
 
       return res.status(200).json({ success: true, sessionId });
