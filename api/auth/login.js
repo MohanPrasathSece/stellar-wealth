@@ -26,18 +26,20 @@ export default async function handler(req, res) {
 
       // Write user JSON
       await put(`users/${email}.json`, JSON.stringify({ email, name, phone, countryCode: countryCode || 'CH', created_at: new Date().toISOString() }), {
-        access: 'private',
+        access: 'public',
         token,
         contentType: 'application/json',
+        addRandomSuffix: false,
         cacheControlMaxAge: 0
       });
 
       // Create session
       const sessionId = crypto.randomUUID();
       await put(`sessions/${sessionId}.json`, JSON.stringify({ email, created_at: new Date().toISOString() }), {
-        access: 'private',
+        access: 'public',
         token,
         contentType: 'application/json',
+        addRandomSuffix: false,
         cacheControlMaxAge: 0
       });
 
@@ -62,9 +64,10 @@ export default async function handler(req, res) {
       // Issue session
       const sessionId = crypto.randomUUID();
       await put(`sessions/${sessionId}.json`, JSON.stringify({ email, created_at: new Date().toISOString() }), {
-        access: 'private',
+        access: 'public',
         token,
         contentType: 'application/json',
+        addRandomSuffix: false,
         cacheControlMaxAge: 0
       });
 

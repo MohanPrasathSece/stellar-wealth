@@ -21,6 +21,7 @@ async function setCount(count) {
     access: "public",
     contentType: "application/json",
     allowOverwrite: true,
+    addRandomSuffix: false,
     token: process.env.BLOB_READ_WRITE_TOKEN,
     storeId: process.env.BLOB_STORE_ID,
     cacheControlMaxAge: 0,
